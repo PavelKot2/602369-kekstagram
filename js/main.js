@@ -1,7 +1,15 @@
 'use strict';
-
+var bigPictureElement = document.querySelector('.big-picture');
+bigPictureElement.classList.remove('hidden');
 var pictureElements = document.querySelector('.pictures');
-var pictureTemplate = document.querySelector('#picture');
+var pictureTemplate = document.querySelector('#picture')
+  .content
+  .querySelector('a');
+
+var commentCount = document.querySelector('.social__comment-count');
+commentCount.classList.add('visually-hidden');
+var commentsLoader = document.querySelector('.comments-loader');
+commentsLoader.classList.add('visually-hidden');
 
 var getRandom = function (arr) {
   var random = arr[Math.floor(Math.random() * (arr.length))];
@@ -22,7 +30,7 @@ var COMMENT_TEXT = ['Всё отлично!', 'В целом всё неплох
 var COMMENT_IMAGE = ['img/avatar-1.svg', 'img/avatar-2.svg', 'img/avatar-3.svg', 'img/avatar-4.svg', 'img/avatar-5.svg', 'img/avatar-6.svg'];
 
 // Создаем массив из объектов "Коментарий"
-
+/*
 var getComments = function (url, text, name) {
   var collection = [];
   var commentInfo = {};
@@ -36,11 +44,11 @@ var getComments = function (url, text, name) {
   }
   return collection;
 };
+*/
 
 var PHOTO_NUMBERS = getArrNumbers(1, 25);
 var PHOTO_LIKES = getArrNumbers(15, 200);
-var PHOTO_COMMENTS = getComments(COMMENT_IMAGE, COMMENT_TEXT, COMMENT_AUTHOR);
-
+var PHOTO_COMMENTS_COUNTER = getArrNumbers(0, 1);
 // создаем пак
 
 var getUserPack = function (url, likes, comments) {
@@ -58,25 +66,50 @@ var collectUsersPack = function () {
   var packLength = 25;
   var usersPacks = [];
   for (var i = 0; i < packLength; i++) {
-    usersPacks[i] = getUserPack(getRandom(PHOTO_NUMBERS), getRandom(PHOTO_LIKES), getRandom(PHOTO_COMMENTS));
+    usersPacks[i] = getUserPack(PHOTO_NUMBERS[i], getRandom(PHOTO_LIKES), getRandom(PHOTO_COMMENTS_COUNTER));
   }
   return usersPacks;
 };
-
-var photoPack = collectUsersPack(); // Массив из фотографий, лайков и комментариев.
 
 var renderUsersPack = function (pack) {
   var packElement = pictureTemplate.cloneNode(true);
   packElement.querySelector('.picture__img').src = pack.url;
   packElement.querySelector('.picture__likes').textContent = pack.likes;
   packElement.querySelector('.picture__comments').textContent = pack.comments;
-
   return packElement;
 };
+/*
+var renderBigPicture = function (arr) {
+  bigPictureElement.querySelector('.big-picture__img').src = arr.url;
+  bigPictureElement.querySelector('.likes-count').textContent = arr.likes;
+  bigPictureElement.querySelector('.comments-count').textContent = arr.comments.length;
+  bigPictureElement.querySelector('.social__comments').src = arr.comments.avatar;
+  bigPictureElement.querySelector('.social__comments').alt = arr.comments.name;
+  bigPictureElement.querySelector('.social__comments').textContent = arr.comments.message[0];
+  return bigPictureElement;
+};
+*/
+var photoPack = collectUsersPack(); // Массив из фотографий, лайков и комментариев.
 
 var fragment = document.createDocumentFragment();
 
 for (var i = 0; i < photoPack.length; i++) {
   fragment.appendChild(renderUsersPack(photoPack[i]));
 }
+
+var commentList = document.querySelector('.social__comments');
+
+for (var comment = 0; comment < 1; comment++) {
+  var newElement = document.createElement('li');
+  var randomAvatar = getRandom(COMMENT_IMAGE);
+  var randomName = getRandom(COMMENT_AUTHOR);
+  var randomText = getRandom(COMMENT_TEXT);
+  var html = '<img class="social__picture" src="' + randomAvatar + '" alt="' + randomName + '" width="35" height="35">';
+  html += '<p class="social__text">' + randomText + '</p>';
+  newElement.className = 'social__comments';
+  newElement.innerHTML = html;
+  commentList.appendChild(newElement);
+}
+
 pictureElements.appendChild(fragment);
+commentList.appendChild(fragment);
