@@ -29,26 +29,10 @@ var COMMENT_AUTHOR = ['Василий Уткин', 'Георгий Чердан�
 var COMMENT_TEXT = ['Всё отлично!', 'В целом всё неплохо. Но не всё.', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.', 'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.', 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
 var COMMENT_IMAGE = ['img/avatar-1.svg', 'img/avatar-2.svg', 'img/avatar-3.svg', 'img/avatar-4.svg', 'img/avatar-5.svg', 'img/avatar-6.svg'];
 
-// Создаем массив из объектов "Коментарий"
-/*
-var getComments = function (url, text, name) {
-  var collection = [];
-  var commentInfo = {};
-  for (var i = 0; i < 4; i++) {
-    commentInfo = {
-      avatar: getRandom(url),
-      message: getRandom(text),
-      name: getRandom(name)
-    };
-    collection[i] = commentInfo;
-  }
-  return collection;
-};
-*/
 
 var PHOTO_NUMBERS = getArrNumbers(1, 25);
 var PHOTO_LIKES = getArrNumbers(15, 200);
-var PHOTO_COMMENTS_COUNTER = getArrNumbers(0, 1);
+var PHOTO_COMMENTS_COUNTER = getArrNumbers(0, 2);
 // создаем пак
 
 var getUserPack = function (url, likes, comments) {
@@ -78,17 +62,7 @@ var renderUsersPack = function (pack) {
   packElement.querySelector('.picture__comments').textContent = pack.comments;
   return packElement;
 };
-/*
-var renderBigPicture = function (arr) {
-  bigPictureElement.querySelector('.big-picture__img').src = arr.url;
-  bigPictureElement.querySelector('.likes-count').textContent = arr.likes;
-  bigPictureElement.querySelector('.comments-count').textContent = arr.comments.length;
-  bigPictureElement.querySelector('.social__comments').src = arr.comments.avatar;
-  bigPictureElement.querySelector('.social__comments').alt = arr.comments.name;
-  bigPictureElement.querySelector('.social__comments').textContent = arr.comments.message[0];
-  return bigPictureElement;
-};
-*/
+
 var photoPack = collectUsersPack(); // Массив из фотографий, лайков и комментариев.
 
 var fragment = document.createDocumentFragment();
