@@ -80,7 +80,7 @@ for (var comment = 0; comment < 1; comment++) {
   var randomText = getRandom(COMMENT_TEXT);
   var html = '<img class="social__picture" src="' + randomAvatar + '" alt="' + randomName + '" width="35" height="35">';
   html += '<p class="social__text">' + randomText + '</p>';
-  newElement.className = 'social__comments';
+  newElement.className = 'social__comment';
   newElement.innerHTML = html;
   commentList.appendChild(newElement);
 }
