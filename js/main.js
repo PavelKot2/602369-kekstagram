@@ -1,6 +1,5 @@
 'use strict';
 var bigPictureElement = document.querySelector('.big-picture');
-bigPictureElement.classList.remove('hidden');
 var pictureElements = document.querySelector('.pictures');
 var pictureTemplate = document.querySelector('#picture')
   .content
@@ -87,3 +86,33 @@ for (var comment = 0; comment < 1; comment++) {
 
 pictureElements.appendChild(fragment);
 commentList.appendChild(fragment);
+
+var uploadElement = document.querySelector('#upload-file');
+var imageEditor = document.querySelector('.img-upload__overlay');
+var uploadElementClose = document.querySelector('#upload-cancel');
+var ESC_KEYCODE = 27;
+
+var onImageEditorEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    imageEditor.classList.add('hidden');
+  }
+};
+
+var closeUploadElement = function () {
+  imageEditor.classList.add('hidden');
+  document.removeEventListener('keydown', onImageEditorEscPress);
+};
+
+var openUploadElement = function () {
+  imageEditor.classList.remove('hidden');
+  document.addEventListener('keydown', onImageEditorEscPress);
+};
+
+
+uploadElement.addEventListener('change', function () {
+  openUploadElement();
+});
+
+uploadElementClose.addEventListener('click', function () {
+  closeUploadElement();
+});
