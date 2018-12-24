@@ -89,18 +89,22 @@ commentList.appendChild(fragment);
 
 var uploadElement = document.querySelector('#upload-file');
 var imageEditor = document.querySelector('.img-upload__overlay');
+var imageScaleBlock = document.querySelector('.img-upload__effect-level');
+var imagePreview = document.querySelector('.img-upload__preview img');
+var imageFilters = document.querySelector('.img-upload__effects');
 var uploadElementClose = document.querySelector('#upload-cancel');
 var ESC_KEYCODE = 27;
 
 var onImageEditorEscPress = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
-    imageEditor.classList.add('hidden');
+    closeUploadElement();
   }
 };
 
 var closeUploadElement = function () {
   imageEditor.classList.add('hidden');
   document.removeEventListener('keydown', onImageEditorEscPress);
+  uploadElement.value = '';
 };
 
 var openUploadElement = function () {
@@ -115,4 +119,33 @@ uploadElement.addEventListener('change', function () {
 
 uploadElementClose.addEventListener('click', function () {
   closeUploadElement();
+});
+
+imageFilters.addEventListener('click', function (evt) {
+  var target = evt.target;
+  switch (target.id) {
+    case 'effect-none':
+      imageScaleBlock.classList.add('hidden');
+      break;
+    case 'effect-chrome':
+      imagePreview.classList.add('effects__preview--chrome');
+      imageScaleBlock.classList.remove('hidden');
+      break;
+    case 'effect-sepia':
+      imagePreview.classList.add('effects__preview--sepia');
+      imageScaleBlock.classList.remove('hidden');
+      break;
+    case 'effect-marvin':
+      imagePreview.classList.add('effects__preview--marvin');
+      imageScaleBlock.classList.remove('hidden');
+      break;
+    case 'effect-phobos':
+      imagePreview.classList.add('effects__preview--phobos');
+      imageScaleBlock.classList.remove('hidden');
+      break;
+    case 'effect-heat':
+      imagePreview.classList.add('effects__preview--heat');
+      imageScaleBlock.classList.remove('hidden');
+      break;
+  }
 });
