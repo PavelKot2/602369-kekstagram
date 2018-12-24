@@ -1,4 +1,7 @@
 'use strict';
+
+// Создание элементов вокруг кнопки загрузки фото
+
 var bigPictureElement = document.querySelector('.big-picture');
 var pictureElements = document.querySelector('.pictures');
 var pictureTemplate = document.querySelector('#picture')
@@ -31,7 +34,7 @@ var COMMENT_IMAGE = ['img/avatar-1.svg', 'img/avatar-2.svg', 'img/avatar-3.svg',
 
 var PHOTO_NUMBERS = getArrNumbers(1, 25);
 var PHOTO_LIKES = getArrNumbers(15, 200);
-var PHOTO_COMMENTS_COUNTER = getArrNumbers(0, 2);
+var PHOTO_COMMENTS_COUNTER = getArrNumbers(0, 200);
 // создаем пак
 
 var getUserPack = function (url, likes, comments) {
@@ -87,6 +90,8 @@ for (var comment = 0; comment < 1; comment++) {
 pictureElements.appendChild(fragment);
 commentList.appendChild(fragment);
 
+// Открытие редактора фото
+
 var uploadElement = document.querySelector('#upload-file');
 var imageEditor = document.querySelector('.img-upload__overlay');
 var imageScaleBlock = document.querySelector('.img-upload__effect-level');
@@ -121,31 +126,69 @@ uploadElementClose.addEventListener('click', function () {
   closeUploadElement();
 });
 
+// Обработка фильтров.
+
 imageFilters.addEventListener('click', function (evt) {
   var target = evt.target;
   switch (target.id) {
     case 'effect-none':
+      imagePreview.className = '';
       imageScaleBlock.classList.add('hidden');
       break;
     case 'effect-chrome':
+      imagePreview.className = '';
       imagePreview.classList.add('effects__preview--chrome');
       imageScaleBlock.classList.remove('hidden');
       break;
     case 'effect-sepia':
+      imagePreview.className = '';
       imagePreview.classList.add('effects__preview--sepia');
       imageScaleBlock.classList.remove('hidden');
       break;
     case 'effect-marvin':
+      imagePreview.className = '';
       imagePreview.classList.add('effects__preview--marvin');
       imageScaleBlock.classList.remove('hidden');
       break;
     case 'effect-phobos':
+      imagePreview.className = '';
       imagePreview.classList.add('effects__preview--phobos');
       imageScaleBlock.classList.remove('hidden');
       break;
     case 'effect-heat':
+      imagePreview.className = '';
       imagePreview.classList.add('effects__preview--heat');
       imageScaleBlock.classList.remove('hidden');
       break;
   }
 });
+
+// Открытие/закрытие большой фотографии при клике на маленькую.
+
+var bigPictureCancel = document.querySelector('.big-picture__cancel');
+
+var onBigPictureEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closeBigPicture();
+  }
+};
+
+var openBigPicture = function () {
+  bigPictureElement.classList.remove('hidden');
+  document.addEventListener('keydown', onBigPictureEscPress);
+};
+
+var closeBigPicture = function () {
+  bigPictureElement.classList.add('hidden');
+  document.removeEventListener('keydown', onBigPictureEscPress);
+};
+
+pictureElements.addEventListener('click', function (evt) {
+  evt.preventDefault();
+  openBigPicture();
+});
+
+bigPictureCancel.addEventListener('click', function () {
+  closeBigPicture();
+});
+
