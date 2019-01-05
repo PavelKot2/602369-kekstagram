@@ -199,23 +199,40 @@ var hashtagField = document.querySelector('.text__hashtags');
 var commentField = document.querySelector('.text__description');
 var maxLength = 20;
 var hashtagsQuantity = 5;
+var maxCommentLength = 140;
 
 uploadSubmitButton.addEventListener('click', function () {
-  debugger;
   var space = ' ';
   var splitString = hashtagField.value.split(space);
   for (var elm = 0; elm < splitString.length; elm++) {
-    if (splitString.length > hashtagsQuantity) {
-      hashtagField.setCustomValidity('нельзя указать больше пяти хэш-тегов');
-    } else if (!/^\#/gi.test(splitString[elm])) {
-      hashtagField.setCustomValidity('хэш-тег должен начинаться с символа # (решётка)');
-    } else if (splitString[elm] === '#') {
-      hashtagField.setCustomValidity('хеш-тег не может состоять только из одной решётки;');
-    } else if (splitString[elm].length > maxLength) {
-      hashtagField.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
-    } else {
-      hashtagField.setCustomValidity('');
+    if (hashtagField.value) {
+      if (splitString.length > hashtagsQuantity) {
+        hashtagField.setCustomValidity('Упс, нельзя указать больше пяти хэш-тегов');
+      } else if (!/^\#/gi.test(splitString[elm])) {
+        hashtagField.setCustomValidity('Упс, хэш-тег должен начинаться с символа # (решётка)');
+      } else if (splitString[elm] === '#') {
+        hashtagField.setCustomValidity('Упс, хеш-тег не может состоять только из одной решётки;');
+      } else if (splitString[elm].length > maxLength) {
+        hashtagField.setCustomValidity('Упс, максимальная длина одного хэш-тега 20 символов, включая решётку');
+      } else if (splitString.indexOf(splitString[elm].toLowerCase()) !== splitString.lastIndexOf(splitString[elm].toLowerCase())) {
+        hashtagField.setCustomValidity('Упс, один и тот же хэш-тег не может быть использован дважды');
+      } else {
+        hashtagField.setCustomValidity('');
+      }
+    } else if (commentField.value) {
+      if (commentField.value.length > maxCommentLength) {
+        commentField.setCustomValidity('Упс, длина комментария не может составлять больше 140 символов');
+      } else {
+        commentField.setCustomValidity('');
+      }
     }
   }
 });
 
+hashtagField.addEventListener('focus', function () {
+  document.removeEventListener('keydown', onImageEditorEscPress);
+});
+
+commentField.addEventListener('focus', function () {
+  document.removeEventListener('keydown', onImageEditorEscPress);
+});
