@@ -1,7 +1,6 @@
 'use strict';
 
 // Создание элементов вокруг кнопки загрузки фото
-
 var bigPictureElement = document.querySelector('.big-picture');
 var pictureElements = document.querySelector('.pictures');
 var pictureTemplate = document.querySelector('#picture')
@@ -164,7 +163,7 @@ imageFilters.addEventListener('click', function (evt) {
 });
 
 // Открытие/закрытие большой фотографии при клике на маленькую.
-
+var pictureList = pictureElements.querySelectorAll('a');
 var bigPictureCancel = document.querySelector('.big-picture__cancel');
 
 var onBigPictureEscPress = function (evt) {
@@ -183,12 +182,40 @@ var closeBigPicture = function () {
   document.removeEventListener('keydown', onBigPictureEscPress);
 };
 
-pictureElements.addEventListener('click', function (evt) {
-  evt.preventDefault();
-  openBigPicture();
-});
+for (var x = 0; x < pictureList.length; x++) {
+  pictureList[x].addEventListener('click', function (evt) {
+    evt.preventDefault();
+    openBigPicture();
+  });
+}
 
 bigPictureCancel.addEventListener('click', function () {
   closeBigPicture();
+});
+
+// Проверка валидности формы хэш-тегов и комментария к загруж изображению.
+var uploadSubmitButton = document.querySelector('.img-upload__submit');
+var hashtagField = document.querySelector('.text__hashtags');
+var commentField = document.querySelector('.text__description');
+var maxLength = 20;
+var hashtagsQuantity = 5;
+
+uploadSubmitButton.addEventListener('click', function () {
+  debugger;
+  var space = ' ';
+  var splitString = hashtagField.value.split(space);
+  for (var elm = 0; elm < splitString.length; elm++) {
+    if (splitString.length > hashtagsQuantity) {
+      hashtagField.setCustomValidity('нельзя указать больше пяти хэш-тегов');
+    } else if (!/^\#/gi.test(splitString[elm])) {
+      hashtagField.setCustomValidity('хэш-тег должен начинаться с символа # (решётка)');
+    } else if (splitString[elm] === '#') {
+      hashtagField.setCustomValidity('хеш-тег не может состоять только из одной решётки;');
+    } else if (splitString[elm].length > maxLength) {
+      hashtagField.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
+    } else {
+      hashtagField.setCustomValidity('');
+    }
+  }
 });
 
