@@ -1,6 +1,8 @@
 'use strict';
 
 // Создание элементов вокруг кнопки загрузки фото
+
+
 var bigPictureElement = document.querySelector('.big-picture');
 var pictureElements = document.querySelector('.pictures');
 var pictureTemplate = document.querySelector('#picture')
@@ -45,7 +47,14 @@ var getUserPack = function (url, likes, comments) {
   return userPack;
 };
 
+
+
+
 // Собираем паки в массив
+
+
+
+
 
 var collectUsersPack = function () {
   var packLength = 25;
@@ -89,7 +98,15 @@ for (var comment = 0; comment < 1; comment++) {
 pictureElements.appendChild(fragment);
 commentList.appendChild(fragment);
 
+
+
+
+
 // Открытие редактора фото
+
+
+
+
 
 var uploadElement = document.querySelector('#upload-file');
 var imageEditor = document.querySelector('.img-upload__overlay');
@@ -125,7 +142,16 @@ uploadElementClose.addEventListener('click', function () {
   closeUploadElement();
 });
 
+
+
+
+
 // Обработка фильтров.
+
+
+
+
+
 
 imageFilters.addEventListener('click', function (evt) {
   var target = evt.target;
@@ -162,7 +188,14 @@ imageFilters.addEventListener('click', function (evt) {
   }
 });
 
+
+
+
 // Открытие/закрытие большой фотографии при клике на маленькую.
+
+
+
+
 var pictureList = pictureElements.querySelectorAll('a');
 var bigPictureCancel = document.querySelector('.big-picture__cancel');
 
@@ -193,7 +226,12 @@ bigPictureCancel.addEventListener('click', function () {
   closeBigPicture();
 });
 
+
+
 // Проверка валидности формы хэш-тегов и комментария к загруж изображению.
+
+
+
 var uploadSubmitButton = document.querySelector('.img-upload__submit');
 var hashtagField = document.querySelector('.text__hashtags');
 var commentField = document.querySelector('.text__description');
