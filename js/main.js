@@ -219,16 +219,19 @@ uploadSubmitButton.addEventListener('click', function () {
     if (hashtagField.value) {
       if (splitString.length > hashtagsQuantity) {
         hashtagField.setCustomValidity('Упс, нельзя указать больше пяти хэш-тегов');
+        break;
       } else if (!/^\#/gi.test(splitString[elm])) {
         hashtagField.setCustomValidity('Упс, хэш-тег должен начинаться с символа # (решётка)');
+        break;
       } else if (splitString[elm] === '#') {
-        console.log('ШО ЗА НАХ СУКАААА ПОЧ НЕ РАБОТАЕШЬ?????');
-        // hashtagField.setCustomValidity('Упс, хеш-тег не может состоять только из одной решётки');
-        alert('Упс, хеш-тег не может состоять только из одной решётки');
+        hashtagField.setCustomValidity('Упс, хеш-тег не может состоять только из одной решётки');
+        break;
       } else if (splitString[elm].length > maxLength) {
         hashtagField.setCustomValidity('Упс, максимальная длина одного хэш-тега 20 символов, включая решётку');
+        break;
       } else if (splitString.indexOf(splitString[elm]) !== splitString.lastIndexOf(splitString[elm])) {
         hashtagField.setCustomValidity('Упс, один и тот же хэш-тег не может быть использован дважды');
+        break;
       } else {
         hashtagField.setCustomValidity('');
       }
