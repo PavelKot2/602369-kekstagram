@@ -241,7 +241,7 @@ var maxCommentLength = 140;
 
 uploadSubmitButton.addEventListener('click', function () {
   var space = ' ';
-  var splitString = hashtagField.value.split(space);
+  var splitString = hashtagField.value.toLowerCase().split(space);
   for (var elm = 0; elm < splitString.length; elm++) {
     if (hashtagField.value) {
       if (splitString.length > hashtagsQuantity) {
@@ -252,7 +252,7 @@ uploadSubmitButton.addEventListener('click', function () {
         hashtagField.setCustomValidity('Упс, хеш-тег не может состоять только из одной решётки;');
       } else if (splitString[elm].length > maxLength) {
         hashtagField.setCustomValidity('Упс, максимальная длина одного хэш-тега 20 символов, включая решётку');
-      } else if (splitString.indexOf(splitString[elm].toLowerCase()) !== splitString.lastIndexOf(splitString[elm].toLowerCase())) {
+      } else if (splitString.indexOf(splitString[elm]) !== splitString.lastIndexOf(splitString[elm])) {
         hashtagField.setCustomValidity('Упс, один и тот же хэш-тег не может быть использован дважды');
       } else {
         hashtagField.setCustomValidity('');
