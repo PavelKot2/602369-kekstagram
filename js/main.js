@@ -2,6 +2,7 @@
 
 // Создание элементов вокруг кнопки загрузки фото
 
+
 var bigPictureElement = document.querySelector('.big-picture');
 var pictureElements = document.querySelector('.pictures');
 var pictureTemplate = document.querySelector('#picture')
@@ -46,7 +47,9 @@ var getUserPack = function (url, likes, comments) {
   return userPack;
 };
 
+
 // Собираем паки в массив
+
 
 var collectUsersPack = function () {
   var packLength = 25;
@@ -90,7 +93,9 @@ for (var comment = 0; comment < 1; comment++) {
 pictureElements.appendChild(fragment);
 commentList.appendChild(fragment);
 
+
 // Открытие редактора фото
+
 
 var uploadElement = document.querySelector('#upload-file');
 var imageEditor = document.querySelector('.img-upload__overlay');
@@ -117,7 +122,6 @@ var openUploadElement = function () {
   document.addEventListener('keydown', onImageEditorEscPress);
 };
 
-
 uploadElement.addEventListener('change', function () {
   openUploadElement();
 });
@@ -127,7 +131,6 @@ uploadElementClose.addEventListener('click', function () {
 });
 
 // Обработка фильтров.
-
 imageFilters.addEventListener('click', function (evt) {
   var target = evt.target;
   switch (target.id) {
@@ -163,8 +166,11 @@ imageFilters.addEventListener('click', function (evt) {
   }
 });
 
+
 // Открытие/закрытие большой фотографии при клике на маленькую.
 
+
+var pictureList = pictureElements.querySelectorAll('a');
 var bigPictureCancel = document.querySelector('.big-picture__cancel');
 
 var onBigPictureEscPress = function (evt) {
@@ -183,12 +189,65 @@ var closeBigPicture = function () {
   document.removeEventListener('keydown', onBigPictureEscPress);
 };
 
-pictureElements.addEventListener('click', function (evt) {
-  evt.preventDefault();
-  openBigPicture();
-});
+for (var x = 0; x < pictureList.length; x++) {
+  pictureList[x].addEventListener('click', function (evt) {
+    evt.preventDefault();
+    openBigPicture();
+  });
+}
 
 bigPictureCancel.addEventListener('click', function () {
   closeBigPicture();
 });
 
+
+// Проверка валидности формы хэш-тегов и комментария к загруж изображению.
+
+
+var uploadSubmitButton = document.querySelector('.img-upload__submit');
+var hashtagField = document.querySelector('.text__hashtags');
+var commentField = document.querySelector('.text__description');
+var maxLength = 20;
+var hashtagsQuantity = 5;
+var maxCommentLength = 140;
+
+uploadSubmitButton.addEventListener('click', function () {
+  var space = ' ';
+  var splitString = hashtagField.value.toLowerCase().split(space);
+  for (var elm = 0; elm < splitString.length; elm++) {
+    if (hashtagField.value) {
+      if (splitString.length > hashtagsQuantity) {
+        hashtagField.setCustomValidity('Упс, нельзя указать больше пяти хэш-тегов');
+        break;
+      } else if (!/^\#/gi.test(splitString[elm])) {
+        hashtagField.setCustomValidity('Упс, хэш-тег должен начинаться с символа # (решётка)');
+        break;
+      } else if (splitString[elm] === '#') {
+        hashtagField.setCustomValidity('Упс, хеш-тег не может состоять только из одной решётки');
+        break;
+      } else if (splitString[elm].length > maxLength) {
+        hashtagField.setCustomValidity('Упс, максимальная длина одного хэш-тега 20 символов, включая решётку');
+        break;
+      } else if (splitString.indexOf(splitString[elm]) !== splitString.lastIndexOf(splitString[elm])) {
+        hashtagField.setCustomValidity('Упс, один и тот же хэш-тег не может быть использован дважды');
+        break;
+      } else {
+        hashtagField.setCustomValidity('');
+      }
+    } else if (commentField.value) {
+      if (commentField.value.length > maxCommentLength) {
+        commentField.setCustomValidity('Упс, длина комментария не может составлять больше 140 символов');
+      } else {
+        commentField.setCustomValidity('');
+      }
+    }
+  }
+});
+
+hashtagField.addEventListener('focus', function () {
+  document.removeEventListener('keydown', onImageEditorEscPress);
+});
+
+commentField.addEventListener('focus', function () {
+  document.removeEventListener('keydown', onImageEditorEscPress);
+});
