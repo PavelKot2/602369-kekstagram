@@ -48,12 +48,7 @@ var getUserPack = function (url, likes, comments) {
 };
 
 
-
-
 // Собираем паки в массив
-
-
-
 
 
 var collectUsersPack = function () {
@@ -99,13 +94,7 @@ pictureElements.appendChild(fragment);
 commentList.appendChild(fragment);
 
 
-
-
-
 // Открытие редактора фото
-
-
-
 
 
 var uploadElement = document.querySelector('#upload-file');
@@ -133,7 +122,6 @@ var openUploadElement = function () {
   document.addEventListener('keydown', onImageEditorEscPress);
 };
 
-
 uploadElement.addEventListener('change', function () {
   openUploadElement();
 });
@@ -142,17 +130,7 @@ uploadElementClose.addEventListener('click', function () {
   closeUploadElement();
 });
 
-
-
-
-
 // Обработка фильтров.
-
-
-
-
-
-
 imageFilters.addEventListener('click', function (evt) {
   var target = evt.target;
   switch (target.id) {
@@ -189,11 +167,7 @@ imageFilters.addEventListener('click', function (evt) {
 });
 
 
-
-
 // Открытие/закрытие большой фотографии при клике на маленькую.
-
-
 
 
 var pictureList = pictureElements.querySelectorAll('a');
@@ -227,9 +201,7 @@ bigPictureCancel.addEventListener('click', function () {
 });
 
 
-
 // Проверка валидности формы хэш-тегов и комментария к загруж изображению.
-
 
 
 var uploadSubmitButton = document.querySelector('.img-upload__submit');
@@ -243,13 +215,16 @@ uploadSubmitButton.addEventListener('click', function () {
   var space = ' ';
   var splitString = hashtagField.value.toLowerCase().split(space);
   for (var elm = 0; elm < splitString.length; elm++) {
+    debugger;
     if (hashtagField.value) {
       if (splitString.length > hashtagsQuantity) {
         hashtagField.setCustomValidity('Упс, нельзя указать больше пяти хэш-тегов');
       } else if (!/^\#/gi.test(splitString[elm])) {
         hashtagField.setCustomValidity('Упс, хэш-тег должен начинаться с символа # (решётка)');
       } else if (splitString[elm] === '#') {
-        hashtagField.setCustomValidity('Упс, хеш-тег не может состоять только из одной решётки;');
+        console.log('ШО ЗА НАХ СУКАААА ПОЧ НЕ РАБОТАЕШЬ?????');
+        // hashtagField.setCustomValidity('Упс, хеш-тег не может состоять только из одной решётки');
+        alert('Упс, хеш-тег не может состоять только из одной решётки');
       } else if (splitString[elm].length > maxLength) {
         hashtagField.setCustomValidity('Упс, максимальная длина одного хэш-тега 20 символов, включая решётку');
       } else if (splitString.indexOf(splitString[elm]) !== splitString.lastIndexOf(splitString[elm])) {
