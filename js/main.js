@@ -215,7 +215,6 @@ uploadSubmitButton.addEventListener('click', function () {
   var space = ' ';
   var splitString = hashtagField.value.toLowerCase().split(space);
   for (var elm = 0; elm < splitString.length; elm++) {
-    debugger;
     if (hashtagField.value) {
       if (splitString.length > hashtagsQuantity) {
         hashtagField.setCustomValidity('Упс, нельзя указать больше пяти хэш-тегов');
