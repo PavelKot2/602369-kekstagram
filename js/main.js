@@ -197,6 +197,7 @@ sliderPin.addEventListener('mousedown', function (evt) {
       newLeft = rightEdge;
     }
     sliderPin.style.left = Math.round((newLeft / 953) * 100) + '%';
+    sliderLineCoords.style.left = Math.round((newLeft / 953) * 100) + '%';
     console.log(Math.round((newLeft / 953) * 100));
   };
 
