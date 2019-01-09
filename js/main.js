@@ -184,7 +184,6 @@ sliderPin.addEventListener('mousedown', function (evt) {
 
   var pinCoords = getCoords(sliderPin);
   var shiftX = evt.pageX - pinCoords.left;
-  var sliderLineCoords = getCoords(sliderLine);
 
   var onMouseMove = function (moveEvt) {
     moveEvt.preventDefault();
@@ -197,7 +196,7 @@ sliderPin.addEventListener('mousedown', function (evt) {
       newLeft = rightEdge;
     }
     sliderPin.style.left = Math.round((newLeft / 953) * 100) + '%';
-    sliderLineCoords.style.left = Math.round((newLeft / 953) * 100) + '%';
+    sliderFillLine.style.left = Math.round((newLeft / 953) * 100) + '%';
     console.log(Math.round((newLeft / 953) * 100));
   };
 
