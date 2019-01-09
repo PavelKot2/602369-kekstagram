@@ -168,46 +168,37 @@ imageFilters.addEventListener('click', function (evt) {
 
 var sliderLine = document.querySelector('.effect-level__line');
 var sliderPin = sliderLine.querySelector('.effect-level__pin');
-var sliderFillLine = sliderLine.querySelector('.effect-level__depth'); // линия заполнения после Пина
-
-var getCoords = function (elem) {
-  var box = elem.getBoundingClientRect();
-
-  return {
-    top: box.top + pageYOffset,
-    left: box.left + pageXOffset
-  };
-};
 
 sliderPin.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
-
-  var pinCoords = getCoords(sliderPin);
-  var shiftX = evt.pageX - pinCoords.left;
+  var startCoords = evt.clientX;
 
   var onMouseMove = function (moveEvt) {
     moveEvt.preventDefault();
-    var newLeft = evt.pageX - shiftX;
-    var rightEdge = sliderLine.offsetWidth;
 
-    if (newLeft < 0) {
-      newLeft = 0;
-    } else if (newLeft > rightEdge) {
-      newLeft = rightEdge;
+    var shiftX = startCoords - moveEvt.clientX;
+
+    startCoords = moveEvt.clientX;
+
+    var posInProc = Math.round(((sliderPin.offsetLeft - shiftX) / sliderLine.offsetWidth) * 100);
+
+    if (posInProc < 0) {
+      posInProc = 0;
+    } else if (posInProc > 100) {
+      posInProc = 100;
     }
-    sliderPin.style.left = Math.round((newLeft / 953) * 100) + '%';
-    sliderFillLine.style.left = Math.round((newLeft / 953) * 100) + '%';
-    console.log(Math.round((newLeft / 953) * 100));
-  };
 
+    sliderPin.style.left = posInProc + '%';
+  };
   var onMouseUp = function (upEvt) {
     upEvt.preventDefault();
-    document.removeEventListener('mousemove', onMouseMove);
-    document.removeEventListener('mouseup', onMouseUp);
+
+    sliderPin.removeEventListener('mousemove', onMouseMove);
+    sliderPin.removeEventListener('mouseup', onMouseUp);
   };
 
-  sliderPin.addEventListener('mousemove', onMouseMove);
-  sliderPin.addEventListener('mouseup', onMouseUp);
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
 });
 
 // Открытие/закрытие большой фотографии при клике на маленькую.
