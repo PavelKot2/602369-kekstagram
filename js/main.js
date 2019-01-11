@@ -140,39 +140,35 @@ imageScaleBlock.classList.add('hidden');
 
 var changeFilter = function (filter) {
   var pinPosition = parseInt(window.getComputedStyle(sliderPin).left, 10);
-  var blockWidth = parseInt(window.getComputedStyle(sliderPin).width, 10);
+  var blockWidth = parseInt(window.getComputedStyle(sliderLine).width, 10);
   var proportionValue = (pinPosition / blockWidth).toFixed(2);
   var nameFilter = filter.replace('effects__preview--', '');
 
   switch (nameFilter) {
     case 'chrome':
-      imagePreview.style.filter = '';
       imagePreview.style.filter = 'grayscale(' + proportionValue + ')';
       break;
     case 'sepia':
-      imagePreview.style.filter = '';
       imagePreview.style.filter = 'sepia(' + proportionValue + ')';
       break;
     case 'marvin':
-      imagePreview.style.filter = '';
       imagePreview.style.filter = 'invert(' + (proportionValue * 100 + '%') + ')';
       break;
     case 'phobos':
-      imagePreview.style.filter = '';
       imagePreview.style.filter = 'blur(' + (proportionValue * 3 + 'px') + ')';
       break;
     case 'heat':
-      imagePreview.style.filter = '';
       imagePreview.style.filter = 'brightness(' + (proportionValue * 2 + 1) + ')';
       break;
   }
-  sliderEffectValue.value = imagePreview.style.filter;
 };
 
 sliderPin.addEventListener('mousedown', function () {
+
   var nameFilter = imagePreview.className;
   changeFilter(nameFilter);
   var onMouseMove = function () {
+
     changeFilter(nameFilter);
   };
   var onMouseUp = function (upEvt) {
@@ -190,30 +186,36 @@ imageFilters.addEventListener('click', function (evt) {
   sliderFillLine.style.width = sliderPin.style.left;
   switch (target.id) {
     case 'effect-none':
+      imagePreview.style.filter = '';
       imagePreview.className = '';
       imageScaleBlock.classList.add('hidden');
       break;
     case 'effect-chrome':
+      imagePreview.style.filter = '';
       imagePreview.className = '';
       imagePreview.classList.add('effects__preview--chrome');
       imageScaleBlock.classList.remove('hidden');
       break;
     case 'effect-sepia':
+      imagePreview.style.filter = '';
       imagePreview.className = '';
       imagePreview.classList.add('effects__preview--sepia');
       imageScaleBlock.classList.remove('hidden');
       break;
     case 'effect-marvin':
+      imagePreview.style.filter = '';
       imagePreview.className = '';
       imagePreview.classList.add('effects__preview--marvin');
       imageScaleBlock.classList.remove('hidden');
       break;
     case 'effect-phobos':
+      imagePreview.style.filter = '';
       imagePreview.className = '';
       imagePreview.classList.add('effects__preview--phobos');
       imageScaleBlock.classList.remove('hidden');
       break;
     case 'effect-heat':
+      imagePreview.style.filter = '';
       imagePreview.className = '';
       imagePreview.classList.add('effects__preview--heat');
       imageScaleBlock.classList.remove('hidden');
@@ -241,6 +243,7 @@ sliderPin.addEventListener('mousedown', function (evt) {
 
     sliderPin.style.left = pinPosition + '%';
     sliderFillLine.style.width = sliderPin.style.left;
+    sliderEffectValue.value = pinPosition;
   };
   var onMouseUp = function (upEvt) {
     upEvt.preventDefault();
