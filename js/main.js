@@ -243,7 +243,6 @@ sliderPin.addEventListener('mousedown', function (evt) {
 
     sliderPin.style.left = pinPosition + '%';
     sliderFillLine.style.width = sliderPin.style.left;
-    sliderEffectValue.value = pinPosition;
   };
   var onMouseUp = function (upEvt) {
     upEvt.preventDefault();
