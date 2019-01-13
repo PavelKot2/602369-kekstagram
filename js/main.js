@@ -135,7 +135,6 @@ uploadElementClose.addEventListener('click', function () {
 var sliderLine = document.querySelector('.effect-level__line');
 var sliderPin = sliderLine.querySelector('.effect-level__pin');
 var sliderFillLine = sliderLine.querySelector('.effect-level__depth'); // линия заполнения после Пина
-var sliderEffectValue = sliderLine.querySelector('.effect-level__value');
 imageScaleBlock.classList.add('hidden');
 
 var changeFilter = function (filter) {
@@ -336,4 +335,30 @@ hashtagField.addEventListener('focus', function () {
 
 commentField.addEventListener('focus', function () {
   document.removeEventListener('keydown', onImageEditorEscPress);
+});
+
+// изменение размера изображения
+
+var scaleControlPLus = document.querySelector('.scale__control--bigger');
+var scaleControlMinus = document.querySelector('.scale__control--smaller');
+var scaleControlValue = document.querySelector('.scale__control--value');
+var scaleStep = 25;
+var scaleMinValue = 25;
+var scaleMaxValue = 100;
+
+var scalePhoto = function (step) {
+  var scale = parseInt(scaleControlValue.value, 10) / 100 + step / 100;
+  imagePreview.style.transform = 'scale(' + scale + ')';
+  scaleControlValue.value = (parseInt(scaleControlValue.value, 10) + step) + '%';
+};
+scaleControlMinus.addEventListener('click', function () {
+  if (parseInt(scaleControlValue.value, 10) > scaleMinValue) {
+    scalePhoto(-scaleMinValue);
+  }
+});
+
+scaleControlPLus.addEventListener('click', function () {
+  if (parseInt(scaleControlValue.value, 10) < scaleMaxValue) {
+    scalePhoto(scaleStep);
+  }
 });
